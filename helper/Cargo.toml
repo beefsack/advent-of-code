@@ -1,9 +1,8 @@
 [package]
-name = "day01a"
+name = "helper"
 version = "0.1.0"
 authors = ["Michael Alexander <beefsack@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-helper = { path = "../../helper" }
 anyhow = "1.0.25"
