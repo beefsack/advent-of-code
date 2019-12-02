@@ -1,12 +1,11 @@
 use helper;
+use std::io::stdin;
 
 fn main() {
     print!(
         "{}",
-        helper::read_usizes()
-            .unwrap()
-            .into_iter()
-            .map(required_fuel)
+        helper::parse_lines::<usize, _>(stdin())
+            .map(|l| required_fuel(l.unwrap()))
             .sum::<usize>()
     );
 }

@@ -1,10 +1,21 @@
 use anyhow::Result;
-use std::io::{self, BufRead};
+use std::error::Error;
+use std::io::{BufRead, BufReader, Read};
+use std::str::FromStr;
 
-pub fn read_usizes() -> Result<Vec<usize>> {
-    io::stdin().lock().lines().map(|l| parse_line(l?)).collect()
+pub fn parse_lines<T, R>(input: R) -> impl Iterator<Item = Result<T>>
+where
+    R: Read,
+    T: FromStr,
+    T::Err: 'static + Error + Send + Sync,
+{
+    BufReader::new(input).lines().map(|l| parse_line(l?))
 }
 
-fn parse_line(line: String) -> Result<usize> {
+pub fn parse_line<T>(line: String) -> Result<T>
+where
+    T: FromStr,
+    T::Err: 'static + Error + Send + Sync,
+{
     Ok(line.parse()?)
 }
