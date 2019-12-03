@@ -21,6 +21,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aoc2015day02b"
+version = "0.1.0"
+dependencies = [
+ "anyhow 1.0.25 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "aoc2019day01a"
 version = "0.1.0"
 dependencies = [
