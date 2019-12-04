@@ -134,7 +134,7 @@ fn parse_wire_path(input: &str) -> Result<WirePath> {
 }
 
 fn parse_wire(input: &str) -> Result<Wire> {
-    input.split(",").map(parse_wire_path).collect()
+    input.split(',').map(parse_wire_path).collect()
 }
 
 #[cfg(test)]
