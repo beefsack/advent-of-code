@@ -23,5 +23,6 @@ members = [
     "2019/day08b",
     "2019/day09a",
     "2019/day09b",
+    "2019/day10a",
     "helper",
 ]
