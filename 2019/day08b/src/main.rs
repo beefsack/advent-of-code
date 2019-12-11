@@ -55,15 +55,6 @@ struct SpaceImageLayer<'a> {
     height: usize,
 }
 
-fn num_zeroes(s: &str) -> usize {
-    s.chars()
-        .map(|c| match c {
-            '0' => 1,
-            _ => 0,
-        })
-        .sum()
-}
-
 fn main() -> Result<()> {
     let raw: String = stdin()
         .lock()

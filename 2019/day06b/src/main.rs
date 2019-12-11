@@ -31,10 +31,6 @@ impl OrbitMap {
         }
     }
 
-    fn count_orbits(&self, object: &str) -> usize {
-        self.orbits(object).len()
-    }
-
     fn orbital_transfers_between(&self, a: &str, b: &str) -> usize {
         let a_orbits = self.orbits(a);
         let b_orbits = self.orbits(b);
@@ -108,15 +104,6 @@ mod tests {
         let om = OrbitMap::parse(TEST_INPUT.as_bytes())?;
         assert_eq!(om.0.get("B"), Some(&"COM".to_string()));
         assert_eq!(om.0.get("L"), Some(&"K".to_string()));
-        Ok(())
-    }
-
-    #[test]
-    fn test_orbit_map_count_orbits() -> Result<()> {
-        let om = OrbitMap::parse(TEST_INPUT.as_bytes())?;
-        assert_eq!(om.count_orbits("D"), 3);
-        assert_eq!(om.count_orbits("L"), 7);
-        assert_eq!(om.count_orbits("COM"), 0);
         Ok(())
     }
 

@@ -303,39 +303,6 @@ fn resume(prog: &mut [isize], pos: usize, inputs: &[isize]) -> Result<Halt> {
     }
 }
 
-const NUM_PHASES: usize = 5;
-
-fn amp(prog: &mut [isize], phases: &[isize]) -> Result<isize> {
-    if phases.len() != NUM_PHASES {
-        return Err(anyhow!("requires {} phases", NUM_PHASES));
-    }
-    let mut signal = 0;
-    for i in phases {
-        let mut prog = prog.to_owned(); // Effectively clones the prog
-        signal = run(&mut prog, &[*i, signal])?.output[0];
-    }
-    Ok(signal)
-}
-
-fn amp_max(prog: &mut [isize]) -> Result<(isize, Vec<isize>)> {
-    let mut highest: Option<isize> = None;
-    let mut highest_phases: Option<Vec<isize>> = None;
-    let mut initial_phases: Vec<isize> = vec![0, 1, 2, 3, 4];
-    let heap = Heap::new(&mut initial_phases);
-    for phases in heap {
-        let mut prog = prog.to_owned();
-        let output = amp(&mut prog, &phases)?;
-        if highest.is_none() || output > highest.unwrap() {
-            highest = Some(output);
-            highest_phases = Some(phases.to_owned());
-        }
-    }
-    Ok((
-        highest.ok_or_else(|| anyhow!("could not find highest phases"))?,
-        highest_phases.unwrap(),
-    ))
-}
-
 struct WaitingProg {
     prog: Vec<isize>,
     pos: usize,
@@ -472,61 +439,6 @@ mod tests {
         assert_eq!(run(&mut prog.clone(), &[0])?.output, vec![0]);
         assert_eq!(run(&mut prog.clone(), &[1])?.output, vec![1]);
         assert_eq!(run(&mut prog.clone(), &[2])?.output, vec![1]);
-        Ok(())
-    }
-
-    #[test]
-    fn test_amp() -> Result<()> {
-        assert_eq!(
-            amp(
-                &mut [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0],
-                &[4, 3, 2, 1, 0]
-            )?,
-            43210
-        );
-        assert_eq!(
-            amp(
-                &mut [
-                    3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23, 101, 5, 23, 23, 1, 24, 23,
-                    23, 4, 23, 99, 0, 0
-                ],
-                &[0, 1, 2, 3, 4]
-            )?,
-            54321
-        );
-        assert_eq!(
-            amp(
-                &mut [
-                    3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33, 1002, 33, 7,
-                    33, 1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0
-                ],
-                &[1, 0, 4, 3, 2]
-            )?,
-            65210
-        );
-        Ok(())
-    }
-
-    #[test]
-    fn test_amp_max() -> Result<()> {
-        assert_eq!(
-            amp_max(&mut [3, 15, 3, 16, 1002, 16, 10, 16, 1, 16, 15, 15, 4, 15, 99, 0, 0])?,
-            (43210, vec![4, 3, 2, 1, 0])
-        );
-        assert_eq!(
-            amp_max(&mut [
-                3, 23, 3, 24, 1002, 24, 10, 24, 1002, 23, -1, 23, 101, 5, 23, 23, 1, 24, 23, 23, 4,
-                23, 99, 0, 0
-            ])?,
-            (54321, vec![0, 1, 2, 3, 4])
-        );
-        assert_eq!(
-            amp_max(&mut [
-                3, 31, 3, 32, 1002, 32, 10, 32, 1001, 31, -2, 31, 1007, 31, 0, 33, 1002, 33, 7, 33,
-                1, 33, 31, 31, 1, 32, 31, 31, 4, 31, 99, 0, 0, 0
-            ])?,
-            (65210, vec![1, 0, 4, 3, 2])
-        );
         Ok(())
     }
 

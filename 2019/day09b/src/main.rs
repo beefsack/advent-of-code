@@ -265,6 +265,7 @@ fn main() -> Result<()> {
 }
 
 struct Halt {
+    #[allow(dead_code)]
     cause: HaltCause,
     output: Vec<isize>,
 }
