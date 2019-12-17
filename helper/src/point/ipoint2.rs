@@ -1,6 +1,6 @@
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use std::ops::{Add, AddAssign, Index, Sub, SubAssign};
 
-#[derive(Debug, PartialEq, Eq, Copy, Clone, Default)]
+#[derive(Debug, PartialEq, Eq, Copy, Clone, Default, Hash)]
 pub struct IPoint2 {
     pub x: isize,
     pub y: isize,
@@ -39,6 +39,23 @@ impl SubAssign for IPoint2 {
     fn sub_assign(&mut self, other: Self) {
         self.x -= other.x;
         self.y -= other.y;
+    }
+}
+
+#[derive(Debug, PartialEq, Eq, Copy, Clone, Hash)]
+pub enum Field {
+    X,
+    Y,
+}
+
+impl Index<Field> for IPoint2 {
+    type Output = isize;
+
+    fn index(&self, field: Field) -> &Self::Output {
+        match field {
+            Field::X => &self.x,
+            Field::Y => &self.y,
+        }
     }
 }
 
