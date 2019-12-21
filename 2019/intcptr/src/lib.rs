@@ -237,11 +237,11 @@ impl Program {
         }
     }
 
-    fn get(&self, at: usize) -> isize {
+    pub fn get(&self, at: usize) -> isize {
         self.memory.get(at).cloned().unwrap_or(0)
     }
 
-    fn set(&mut self, at: usize, val: isize) {
+    pub fn set(&mut self, at: usize, val: isize) {
         if self.memory.len() <= at {
             self.memory.resize(at + 1, 0);
         }
