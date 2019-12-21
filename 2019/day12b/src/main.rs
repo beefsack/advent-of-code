@@ -6,6 +6,7 @@ use regex::Regex;
 use helper::point::ipoint3::Field;
 use helper::point::IPoint3;
 
+use std::cmp::Ordering;
 use std::collections::HashMap;
 use std::hash::Hash;
 use std::io::{stdin, BufRead};
@@ -120,12 +121,10 @@ fn parse_ipoint3(input: &str) -> Result<IPoint3> {
 }
 
 fn gravity_change1(a: isize, b: isize) -> isize {
-    if a < b {
-        1
-    } else if a > b {
-        -1
-    } else {
-        0
+    match a.cmp(&b) {
+        Ordering::Greater => -1,
+        Ordering::Less => 1,
+        Ordering::Equal => 0,
     }
 }
 

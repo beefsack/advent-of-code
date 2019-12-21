@@ -4,6 +4,7 @@ use regex::Regex;
 
 use helper::point::IPoint3;
 
+use std::cmp::Ordering;
 use std::io::{stdin, BufRead};
 
 #[derive(Debug, PartialEq, Eq, Copy, Clone)]
@@ -82,12 +83,10 @@ fn parse_ipoint3(input: &str) -> Result<IPoint3> {
 }
 
 fn gravity_change_1d(a: isize, b: isize) -> isize {
-    if a < b {
-        1
-    } else if a > b {
-        -1
-    } else {
-        0
+    match a.cmp(&b) {
+        Ordering::Greater => -1,
+        Ordering::Less => 1,
+        Ordering::Equal => 0,
     }
 }
 
