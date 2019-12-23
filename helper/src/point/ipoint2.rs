@@ -64,6 +64,10 @@ impl IPoint2 {
         ((self.x.pow(2) + self.y.pow(2)) as f64).sqrt()
     }
 
+    pub fn manhattan(&self) -> isize {
+        self.x.abs() + self.y.abs()
+    }
+
     pub fn to_vec(&self) -> Vec<isize> {
         vec![self.x, self.y]
     }

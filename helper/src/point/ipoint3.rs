@@ -71,6 +71,10 @@ impl IPoint3 {
         ((self.x.pow(2) + self.y.pow(2) + self.z.pow(2)) as f64).sqrt()
     }
 
+    pub fn manhattan(&self) -> isize {
+        self.x.abs() + self.y.abs() + self.z.abs()
+    }
+
     pub fn to_vec(&self) -> Vec<isize> {
         vec![self.x, self.y, self.z]
     }
