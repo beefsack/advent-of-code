@@ -266,6 +266,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aoc2019day16b"
+version = "0.1.0"
+dependencies = [
+ "anyhow 1.0.25 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "autocfg"
 version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
