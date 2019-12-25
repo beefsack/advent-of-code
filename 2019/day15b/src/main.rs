@@ -52,12 +52,10 @@ impl From<IPoint2> for Dir {
             } else {
                 Dir::West
             }
+        } else if p.y > 0 {
+            Dir::South
         } else {
-            if p.y > 0 {
-                Dir::South
-            } else {
-                Dir::North
-            }
+            Dir::North
         }
     }
 }
@@ -90,8 +88,8 @@ enum Tile {
 }
 
 impl Tile {
-    fn is_blocking(&self) -> bool {
-        match *self {
+    fn is_blocking(self) -> bool {
+        match self {
             Tile::Empty | Tile::OxygenSystem => false,
             Tile::Wall => true,
         }

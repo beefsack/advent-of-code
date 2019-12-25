@@ -21,9 +21,9 @@ impl Pattern {
 
     fn apply(&self, input: Vec<isize>) -> Vec<isize> {
         let mut output = vec![0isize; input.len()];
-        for i in 0..input.len() {
+        for (i, output_item) in output.iter_mut().enumerate().take(input.len()) {
             let p = self.nth(i + 1);
-            output[i] = input
+            *output_item = input
                 .iter()
                 .enumerate()
                 .map(|(k, v)| v * p[(k + 1) % p.len()])
